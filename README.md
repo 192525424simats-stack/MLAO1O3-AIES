@@ -130,5 +130,64 @@ STOP
 
 -----------------------------------------------------#5 GREEDY BEST FIRST SEARCH---------------------------------------------------------------------------
 
+START
 
+Create the graph
+Create the heuristic values
+
+FUNCTION GREEDY_BEST_FIRST(start, goal)
+
+    Create an empty priority queue
+    Insert the start node into the queue using its heuristic value
+
+    Create an empty visited set
+    Set parent(start) = NULL
+
+    WHILE queue is not empty
+
+        Remove the node with the lowest heuristic value
+
+        IF current node = goal THEN
+            Create an empty path
+
+            WHILE current node is not NULL
+                Add current node to the path
+                Move to its parent
+            END WHILE
+
+            Reverse the path
+            RETURN path
+        END IF
+
+        IF current node is not visited THEN
+            Mark current node as visited
+
+            FOR each neighbor of current node
+
+                IF neighbor is not visited THEN
+                    Insert neighbor into the queue using its heuristic value
+                    Set parent(neighbor) = current node
+                END IF
+
+            END FOR
+
+        END IF
+
+    END WHILE
+
+    RETURN "Path not found"
+
+END FUNCTION
+
+Call GREEDY_BEST_FIRST(start, goal)
+
+IF path exists THEN
+    Print path
+ELSE
+    Print "Path not found"
+END IF
+
+STOP
+
+-----------------------------------------------------------------------
 
