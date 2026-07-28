@@ -78,7 +78,7 @@ START
 
 STOP
             
---------------------------------------------------------------#4 A* PROGRAMS-------------------------------------------------------------------------------------
+--------------------------------------------------------------#4 A* PROGRAM-------------------------------------------------------------------------------------
 
 START
 
@@ -128,7 +128,7 @@ Call A_STAR(start, goal)
 
 STOP
 
------------------------------------------------------#5 GREEDY BEST FIRST SEARCH---------------------------------------------------------------------------
+------------------------------------------------------#5 GREEDY BEST FIRST SEARCH PROGRAM ---------------------------------------------------------------------------
 
 START
 
@@ -189,5 +189,38 @@ END IF
 
 STOP
 
------------------------------------------------------------------------
+-----------------------------------------------------------------#6 MINIMAX PROGRAM--------------------------------------------------------------------------
+
+START
+
+Create the game tree
+
+FUNCTION MINIMAX(node, maximizing)
+
+    IF node is a leaf node THEN
+        IF maximizing THEN
+            RETURN maximum value of the node
+        ELSE
+            RETURN minimum value of the node
+        END IF
+    END IF
+
+    left  = MINIMAX(left child, NOT maximizing)
+    right = MINIMAX(right child, NOT maximizing)
+
+    IF maximizing THEN
+        RETURN maximum(left, right)
+    ELSE
+        RETURN minimum(left, right)
+    END IF
+
+END FUNCTION
+
+result = MINIMAX(A, TRUE)
+
+Print result
+
+STOP
+
+-----------------------------------------------------------------
 
