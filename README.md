@@ -78,3 +78,57 @@ START
 
 STOP
             
+--------------------------------------------------------------#4 A* PROGRAMS-------------------------------------------------------------------------------------
+
+START
+
+Create graph and heuristic values
+
+Define A_STAR(start, goal)
+
+    Create an empty priority queue
+    Insert start node into the queue
+
+    Set cost(start) = 0
+    Set parent(start) = NULL
+
+    WHILE queue is not empty
+
+        Remove node with lowest priority
+
+        IF current node = goal THEN
+            Display path
+            Display total cost
+            STOP
+        END IF
+
+        FOR each neighbor of current node
+
+            Calculate new_cost = current_cost + edge_cost
+
+            IF neighbor is not visited
+               OR new_cost is smaller than previous cost THEN
+
+                Update neighbor cost
+                Calculate priority = new_cost + heuristic(neighbor)
+                Insert neighbor into queue
+                Set parent of neighbor = current node
+
+            END IF
+
+        END FOR
+
+    END WHILE
+
+    Display "Path not found"
+
+END
+
+Call A_STAR(start, goal)
+
+STOP
+
+-----------------------------------------------------#5 GREEDY BEST FIRST SEARCH---------------------------------------------------------------------------
+
+
+
