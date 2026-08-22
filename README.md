@@ -308,5 +308,319 @@ DISPLAY highest information gain
 
 END
 
-----------------------------------------------------------
+-------------------------------------------------------------#8 AI MAZE GAME PROGRAM-----------------------------------------------------------------------------
 
+START
+
+Define the maze
+Find the position of S as START
+Find the position of G as GOAL
+
+Create an empty queue
+Add (START, empty path) to the queue
+
+Create a set SEEN
+Add START to SEEN
+
+WHILE queue is not empty
+
+    Remove the first element from the queue
+    Get current position and path
+
+    IF current position is GOAL THEN
+        Display the path
+        Display number of steps
+        STOP
+    END IF
+
+    For each direction:
+        Down
+        Up
+        Right
+        Left
+
+        Calculate the new position
+
+        IF new position is inside the maze
+           AND new position is not a wall
+           AND new position is not already SEEN THEN
+
+            Add new position to SEEN
+            Add new position and updated path to the queue
+
+        END IF
+
+    END FOR
+
+END WHILE
+
+END
+
+--------------------------------------------------------------------#9 4-QUEENS GAME PROGRAM----------------------------------------------------------------------
+
+START
+
+Set N = 4
+Create BOARD of size N and initialize all positions to -1
+
+FUNCTION SAFE(row, column)
+
+    FOR each previous row i from 0 to row - 1
+
+        IF BOARD[i] = column THEN
+            RETURN FALSE
+        END IF
+
+        IF |BOARD[i] - column| = |i - row| THEN
+            RETURN FALSE
+        END IF
+
+    END FOR
+
+    RETURN TRUE
+
+END FUNCTION
+
+
+FUNCTION SOLVE(row)
+
+    IF row = N THEN
+        RETURN TRUE
+    END IF
+
+    FOR column from 0 to N - 1
+
+        IF SAFE(row, column) THEN
+
+            Place queen at BOARD[row] = column
+
+            IF SOLVE(row + 1) = TRUE THEN
+                RETURN TRUE
+            END IF
+
+        END IF
+
+    END FOR
+
+    RETURN FALSE
+
+END FUNCTION
+
+
+Call SOLVE(0)
+
+FOR each row from 0 to N - 1
+
+    FOR each column from 0 to N - 1
+
+        IF BOARD[row] = column THEN
+            PRINT "Q"
+        ELSE
+            PRINT "."
+        END IF
+
+    END FOR
+
+END FOR
+
+PRINT "Conflicts: 0"
+PRINT "Successfully Completed"
+
+END
+
+------------------------------------------------------------------#10 WATER JUG PUZZLE GAME---------------------------------------------------------------------
+
+START
+
+Set capacities:
+    A = 11
+    B = 9
+    TARGET = 8
+
+Create a queue
+Add initial state (0, 0) with an empty path to the queue
+
+Create a SEEN set
+Add (0, 0) to SEEN
+
+WHILE queue is not empty
+
+    Remove the first state from the queue
+    Get amounts (a, b) and current path
+
+    IF a = TARGET OR b = TARGET THEN
+        PRINT solution path
+        PRINT number of moves
+        PRINT final state
+        STOP
+    END IF
+
+    Generate possible states:
+
+        Fill 11L jug
+        Fill 9L jug
+        Empty 11L jug
+        Empty 9L jug
+
+        Pour water from 11L jug to 9L jug
+            Amount transferred = minimum of
+            (water in 11L jug, empty space in 9L jug)
+
+        Pour water from 9L jug to 11L jug
+            Amount transferred = minimum of
+            (water in 9L jug, empty space in 11L jug)
+
+    FOR each new state
+
+        IF new state is not in SEEN THEN
+            Add new state to SEEN
+            Add new state and updated path to queue
+        END IF
+
+    END FOR
+
+END WHILE
+
+END
+
+--------------------------------------------------------------------#11 CONNECT FOUR AI VS HUMAN--------------------------------------------------------------
+
+START
+
+Create 6 × 7 Connect Four board
+
+FUNCTION CHECK_WINNER(piece)
+    Check horizontal, vertical, and diagonal groups of 4
+    Return TRUE if four pieces match
+    Otherwise return FALSE
+END FUNCTION
+
+FUNCTION MINIMAX(depth, maximizing)
+    Evaluate the board
+
+    IF game is won OR depth = 0 OR board is full
+        Return score
+    END IF
+
+    Generate all valid moves
+
+    IF maximizing
+        Return maximum score of possible moves
+    ELSE
+        Return minimum score of possible moves
+    END IF
+END FUNCTION
+
+FUNCTION BEST_MOVE
+    Check all valid columns
+    Use MINIMAX to calculate each move's score
+    Select the move with highest score
+    Return best column
+END FUNCTION
+
+WHILE game is not over
+
+    Display board
+
+    Get player's column
+    Place X
+
+    IF player wins
+        Display "Player Wins"
+        STOP
+    END IF
+
+    AI selects BEST_MOVE
+    Place O
+
+    IF AI wins
+        Display "AI Wins"
+        STOP
+    END IF
+
+    IF board is full
+        Display "Game Draw"
+        STOP
+    END IF
+
+END WHILE
+
+END
+
+-------------------------------------------------------------#12 8-PUZZLE GAME PROGRAM---------------------------------------------------------------------------
+
+START
+
+Define GOAL state as:
+1 2 3
+4 5 6
+7 8 0
+
+FUNCTION MANHATTAN(state)
+    Set distance = 0
+    FOR each tile except 0
+        Find current position and goal position
+        Add row and column distance
+    END FOR
+    RETURN distance
+END FUNCTION
+
+FUNCTION GET_NEIGHBORS(state)
+    Find position of 0
+    Generate possible moves: Up, Down, Left, Right
+    Swap 0 with the valid neighboring tile
+    Return new states and actions
+END FUNCTION
+
+FUNCTION A_STAR(start)
+
+    Create priority queue
+    Insert start state with:
+        g = 0
+        h = MANHATTAN(start)
+        f = g + h
+
+    Create VISITED set
+
+    WHILE priority queue is not empty
+
+        Remove state with lowest f
+
+        IF state is already visited
+            CONTINUE
+        END IF
+
+        Add state to VISITED
+
+        IF state = GOAL
+            RETURN solution path
+        END IF
+
+        Generate neighboring states
+
+        FOR each neighbor
+            Calculate:
+                g = current cost + 1
+                h = MANHATTAN(neighbor)
+                f = g + h
+
+            Add neighbor to priority queue
+        END FOR
+
+    END WHILE
+
+    RETURN no solution
+END FUNCTION
+
+Set initial scrambled state
+
+Call A_STAR(initial state)
+
+Display Initial State
+Display Goal State
+Display Solution Path
+Display Minimum Moves
+
+END
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
