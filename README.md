@@ -222,5 +222,91 @@ Print result
 
 STOP
 
------------------------------------------------------------------
+----------------------------------------------------------------#7 DECISION MAKING PROGRAM---------------------------------------------------------------------
+
+BEGIN
+
+IMPORT math
+
+STORE the Play Tennis dataset in DATA
+
+SET attributes = [Outlook, Temperature, Humidity, Wind]
+
+FUNCTION Entropy(rows)
+
+    COUNT number of Yes values
+    COUNT number of No values
+
+    SET total = number of rows
+    SET entropy = 0
+
+    IF Yes count > 0 THEN
+        SET p_yes = Yes count / total
+        entropy = entropy - (p_yes × log2(p_yes))
+    END IF
+
+    IF No count > 0 THEN
+        SET p_no = No count / total
+        entropy = entropy - (p_no × log2(p_no))
+    END IF
+
+    RETURN entropy
+
+END FUNCTION
+
+
+FUNCTION InformationGain(rows, column)
+
+    SET total_entropy = Entropy(rows)
+
+    FIND all unique values of the selected attribute
+
+    SET weighted_entropy = 0
+
+    FOR each value in the attribute
+
+        CREATE subset containing rows with that value
+
+        SET subset_entropy = Entropy(subset)
+
+        weighted_entropy =
+            weighted_entropy +
+            (size of subset / size of rows) × subset_entropy
+
+    END FOR
+
+    SET information_gain =
+        total_entropy - weighted_entropy
+
+    RETURN information_gain
+
+END FUNCTION
+
+
+CALCULATE total_entropy = Entropy(DATA)
+
+DISPLAY total_entropy
+
+FOR each attribute from Outlook, Temperature, Humidity and Wind
+
+    CALCULATE information gain
+
+    DISPLAY attribute and information gain
+
+END FOR
+
+
+CREATE a list of all information gain values
+
+FIND the maximum information gain
+
+FIND the attribute having maximum information gain
+
+DISPLAY best attribute
+
+DISPLAY highest information gain
+
+END
+
+----------------------------------------------------------
 
